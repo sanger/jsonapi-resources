@@ -81,6 +81,8 @@ module ActionDispatch
           res = JSONAPI::Resource.resource_for(resource_type_with_module_prefix(@resource_type))
 
           options = resources.extract_options!.dup
+
+
           options[:controller] ||= @resource_type
           options.merge!(res.routing_resource_options)
 
@@ -97,8 +99,9 @@ module ActionDispatch
             options[:except] = Array(options[:except])
             options[:except] << :new unless options[:except].include?(:new) || options[:except].include?('new')
             options[:except] << :edit unless options[:except].include?(:edit) || options[:except].include?('edit')
+            options[:except] << :destroy unless options[:except].include?(:destroy) || options[:except].include?('destroy')
           else
-            options[:except] = [:new, :edit]
+            options[:except] = [:new, :edit, :destroy]
           end
 
           if res._immutable
