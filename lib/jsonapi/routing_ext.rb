@@ -76,7 +76,15 @@ module ActionDispatch
           end
         end
 
+        def jsonapi_resources_except_destroy(*resources, &_block)
+          jsonapi_resources_with_custom_except(*resources, add_destroy: true, &_block)
+        end
+
         def jsonapi_resources(*resources, &_block)
+          jsonapi_resources_with_custom_except(*resources, add_destroy: false, &_block)
+        end
+
+        def jsonapi_resources_with_custom_except(*resources, add_destroy:, &_block)
           @resource_type = resources.first
           res = JSONAPI::Resource.resource_for(resource_type_with_module_prefix(@resource_type))
 
@@ -85,7 +93,6 @@ module ActionDispatch
           options.merge!(res.routing_resource_options)
 
           options[:param] = :id
-
           options[:path] = format_route(@resource_type)
 
           if res.resource_key_type == :uuid
@@ -93,18 +100,23 @@ module ActionDispatch
             options[:constraints][:id] ||= /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/
           end
 
+          # Build except array based on existing except + required defaults
           if options[:except]
             options[:except] = Array(options[:except])
             options[:except] << :new unless options[:except].include?(:new) || options[:except].include?('new')
             options[:except] << :edit unless options[:except].include?(:edit) || options[:except].include?('edit')
-            options[:except] << :destroy unless options[:except].include?(:destroy) || options[:except].include?('destroy')
+
+            # Only add :destroy if add_destroy is true
+            if add_destroy
+              options[:except] << :destroy unless options[:except].include?(:destroy) || options[:except].include?('destroy')
+            end
           else
-            options[:except] = [:new, :edit, :destroy]
+            options[:except] = add_destroy ? [:new, :edit, :destroy] : [:new, :edit]
           end
 
           if res._immutable
-            options[:except] << :create  unless options[:except].include?(:create)  || options[:except].include?('create')
-            options[:except] << :update  unless options[:except].include?(:update)  || options[:except].include?('update')
+            options[:except] << :create unless options[:except].include?(:create) || options[:except].include?('create')
+            options[:except] << :update unless options[:except].include?(:update) || options[:except].include?('update')
             options[:except] << :destroy unless options[:except].include?(:destroy) || options[:except].include?('destroy')
           end
 
