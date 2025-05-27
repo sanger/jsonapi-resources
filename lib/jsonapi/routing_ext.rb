@@ -81,8 +81,6 @@ module ActionDispatch
           res = JSONAPI::Resource.resource_for(resource_type_with_module_prefix(@resource_type))
 
           options = resources.extract_options!.dup
-
-
           options[:controller] ||= @resource_type
           options.merge!(res.routing_resource_options)
 
