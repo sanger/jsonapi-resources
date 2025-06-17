@@ -52,7 +52,7 @@ ActiveRecord::Schema.define do
   end
 
   create_table :posts, force: true do |t|
-    t.string     :title, length: 255
+    t.string     :title, limit: 255
     t.text       :body
     t.integer    :author_id
     t.integer    :parent_post_id
@@ -85,17 +85,20 @@ ActiveRecord::Schema.define do
   end
 
   create_table :posts_tags, force: true do |t|
-    t.references :post, :tag, index: true
+    t.references :post, index:true
+    t.references :tag, index:true
   end
   add_index :posts_tags, [:post_id, :tag_id], unique: true
 
   create_table :special_post_tags, force: true do |t|
-    t.references :post, :tag, index: true
+    t.references :post, index: true
+    t.references :tag, index: true
   end
   add_index :special_post_tags, [:post_id, :tag_id], unique: true
 
   create_table :comments_tags, force: true do |t|
-    t.references :comment, :tag, index: true
+    t.references :comment, index: true
+    t.references :tag, index: true
   end
 
   create_table :iso_currencies, id: false, force: true do |t|
@@ -324,8 +327,8 @@ ActiveRecord::Schema.define do
 
   create_table :related_things, force: true  do |t|
     t.string :name
-    t.references :from, references: :thing
-    t.references :to, references: :thing
+    t.references :from, foreign_key: { to_table: :things }
+    t.references :to, foreign_key: { to_table: :things }
 
     t.timestamps null: false
   end
