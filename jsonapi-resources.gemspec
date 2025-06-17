@@ -6,11 +6,11 @@ require 'jsonapi/resources/version'
 Gem::Specification.new do |spec|
   spec.name          = 'sanger-jsonapi-resources'
   spec.version       = JSONAPI::Resources::VERSION
-  spec.authors       = ['Dan Gebhardt', 'Larry Gebhardt']
-  spec.email         = ['dan@cerebris.com', 'larry@cerebris.com']
+  spec.authors       = ['PSD Team - Wellcome Trust Sanger Institute']
+  spec.email         = ['psd@sanger.ac.uk']
   spec.summary       = 'Easily support JSON API in Rails.'
   spec.description   = 'Forked from jsonapi-resources. A resource-centric approach to implementing the controllers, routes, and serializers needed to support the JSON API spec.'
-  spec.homepage      = 'https://github.com/cerebris/jsonapi-resources'
+  spec.homepage      = 'https://github.com/sanger/jsonapi-resources'
   spec.license       = 'MIT'
 
   spec.files         = Dir.glob("{bin,lib}/**/*") + %w(LICENSE.txt README.md)
