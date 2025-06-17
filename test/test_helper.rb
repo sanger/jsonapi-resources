@@ -19,7 +19,6 @@ if ENV['COVERAGE']
 end
 
 require 'active_record/railtie'
-require 'rails/test_help'
 require 'minitest/mock'
 require 'jsonapi-resources'
 require 'pry'
@@ -38,7 +37,6 @@ JSONAPI.configure do |config|
   config.json_key_format = :camelized_key
 end
 
-puts "Testing With RAILS VERSION #{Rails.version}"
 
 class TestApp < Rails::Application
   config.eager_load = false
@@ -203,9 +201,14 @@ def show_queries
   end
 end
 
-TestApp.initialize!
+# Establish the connection before loading schema
+ActiveRecord::Base.establish_connection(adapter: "sqlite3", database: ":memory:")
 
-require File.expand_path('../fixtures/active_record', __FILE__)
+
+TestApp.initialize!
+# ✅ Now load the schema AFTER the connection is ready
+require_relative 'fixtures/active_record'
+
 
 module Pets
   module V1
@@ -417,12 +420,12 @@ class Minitest::Test
     true
   end
 
-  self.fixture_path = "#{Rails.root}/fixtures"
+  self.fixture_paths = ["#{Rails.root}/fixtures"]
   fixtures :all
 end
 
 class ActiveSupport::TestCase
-  self.fixture_path = "#{Rails.root}/fixtures"
+  self.fixture_paths =  ["#{Rails.root}/fixtures"]
   fixtures :all
   setup do
     @routes = TestApp.routes
@@ -430,7 +433,7 @@ class ActiveSupport::TestCase
 end
 
 class ActionDispatch::IntegrationTest
-  self.fixture_path = "#{Rails.root}/fixtures"
+  self.fixture_paths = ["#{Rails.root}/fixtures"]
   fixtures :all
 
   def assert_jsonapi_response(expected_status, msg = nil)

@@ -28,7 +28,7 @@ which *should* be compatible with JSON:API compliant server implementations such
 
 Add JR to your application's `Gemfile`:
 
-    gem 'jsonapi-resources'
+    gem 'sanger-jsonapi-resources'
 
 And then execute:
 
@@ -36,7 +36,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install jsonapi-resources
+    $ gem install sanger-jsonapi-resources
 
 **For further usage see the [v0.9 beta Guide](http://jsonapi-resources.com/v0.9/guide/)**
 

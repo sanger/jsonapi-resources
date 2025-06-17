@@ -57,18 +57,23 @@ ActiveRecord::Schema.define do
     t.timestamps null: false
   end
 
-  create_table :posts_tags, force: true do |t|
-    t.references :post, :tag, index: true
+
+
+  create_table :posts_tags, force: true, id: false do |t|
+    t.references :post, null: false
+    t.references :tag, null: false
   end
   add_index :posts_tags, [:post_id, :tag_id], unique: true
 
   create_table :special_post_tags, force: true do |t|
-    t.references :post, :tag, index: true
+    t.references :post, null: false, foreign_key: false
+    t.references :tag, null: false, foreign_key: false
   end
   add_index :special_post_tags, [:post_id, :tag_id], unique: true
 
   create_table :comments_tags, force: true do |t|
-    t.references :comment, :tag, index: true
+    t.references :comment, null: false
+    t.references :tag, null: false
   end
 
   create_table :iso_currencies, id: false, force: true do |t|
@@ -95,7 +100,8 @@ ActiveRecord::Schema.define do
   end
 
   create_table :planets_tags, force: true do |t|
-    t.references :planet, :tag, index: true
+    t.references :planet, null: false
+    t.references :tag, null: false
   end
   add_index :planets_tags, [:planet_id, :tag_id], unique: true
 
@@ -184,7 +190,8 @@ ActiveRecord::Schema.define do
   end
 
   create_table :purchase_orders_order_flags, force: true do |t|
-    t.references :purchase_order, :order_flag, index: true
+   t.references :purchase_order, null: false
+   t.references :order_flag, null: false
   end
   add_index :purchase_orders_order_flags, [:purchase_order_id, :order_flag_id], unique: true, name: "po_flags_idx"
 
@@ -285,8 +292,8 @@ ActiveRecord::Schema.define do
 
   create_table :related_things, force: true  do |t|
     t.string :name
-    t.references :from, references: :thing
-    t.references :to, references: :thing
+    t.references :from
+    t.references :to
 
     t.timestamps null: false
   end
@@ -342,8 +349,8 @@ class Post < ActiveRecord::Base
   belongs_to :writer, class_name: 'Person', foreign_key: 'author_id'
   has_many :comments
   has_and_belongs_to_many :tags, join_table: :posts_tags
-  has_many :special_post_tags, source: :tag
-  has_many :special_tags, through: :special_post_tags, source: :tag
+  has_many :special_post_tags
+  has_many :special_tags, through: :special_post_tags
   belongs_to :section
   has_one :parent_post, class_name: 'Post', foreign_key: 'parent_post_id'
 
@@ -621,8 +628,8 @@ class Thing < ActiveRecord::Base
 end
 
 class RelatedThing < ActiveRecord::Base
-  belongs_to :from, class_name: Thing, foreign_key: :from_id
-  belongs_to :to, class_name: Thing, foreign_key: :to_id
+  belongs_to :from, class_name: 'Thing', foreign_key: :from_id
+  belongs_to :to, class_name: 'Thing', foreign_key: :to_id
 end
 
 class Question < ActiveRecord::Base
