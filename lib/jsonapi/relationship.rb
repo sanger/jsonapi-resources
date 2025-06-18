@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require_relative 'compatibility_helper'
 module JSONAPI
   class Relationship
     attr_reader :acts_as_set, :foreign_key, :options, :name,
@@ -21,7 +21,7 @@ module JSONAPI
       @polymorphic = options.fetch(:polymorphic, false) == true
       @polymorphic_types = options[:polymorphic_types]
       if options[:polymorphic_relations]
-        ActiveSupport::Deprecation.warn('Use polymorphic_types instead of polymorphic_relations')
+        JSONAPI::CompatibilityHelper.deprecation_warn('Use polymorphic_types instead of polymorphic_relations')
         @polymorphic_types ||= options[:polymorphic_relations]
       end
 

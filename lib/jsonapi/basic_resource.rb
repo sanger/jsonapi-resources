@@ -2,7 +2,7 @@
 
 require 'jsonapi/callbacks'
 require 'jsonapi/configuration'
-
+require_relative 'compatibility_helper'
 module JSONAPI
   class BasicResource
     include Callbacks
@@ -547,7 +547,7 @@ module JSONAPI
         check_reserved_attribute_name(attr)
 
         if (attr == :id) && (options[:format].nil?)
-          ActiveSupport::Deprecation.warn('Id without format is no longer supported. Please remove ids from attributes, or specify a format.')
+          JSONAPI::CompatibilityHelper.deprecation_warn('Id without format is deprecated. Please specify a format for the id attribute.')
         end
 
         check_duplicate_attribute_name(attr) if options[:format].nil?
@@ -609,11 +609,12 @@ module JSONAPI
       end
 
       def belongs_to(*attrs)
-        ActiveSupport::Deprecation.warn "In #{name} you exposed a `has_one` relationship "\
+
+        JSONAPI::CompatibilityHelper.deprecation_warn( "In #{name} you exposed a `has_one` relationship "\
                                         " using the `belongs_to` class method. We think `has_one`" \
                                         " is more appropriate. If you know what you're doing," \
                                         " and don't want to see this warning again, override the" \
-                                        " `belongs_to` class method on your resource."
+                                        " `belongs_to` class method on your resource.")
         _add_relationship(Relationship::ToOne, *attrs)
       end
 
