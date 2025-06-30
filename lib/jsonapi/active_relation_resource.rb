@@ -666,10 +666,14 @@ module JSONAPI
             end
 
             relation_position = relation_positions[row[2].downcase.pluralize]
-            model_fields = relation_position[:model_fields]
-            cache_field = relation_position[:cache_field]
-            cache_offset = relation_position[:cache_offset]
-            field_offset = relation_position[:field_offset]
+            if relation_position
+              model_fields = relation_position[:model_fields]
+              cache_field = relation_position[:cache_field]
+              cache_offset = relation_position[:cache_offset]
+              field_offset = relation_position[:field_offset]
+            else
+              next # Skip processing if relation_position is nil
+            end
 
             if cache_field
               related_fragments[rid].cache = cast_to_attribute_type(row[cache_offset], cache_field[:type])

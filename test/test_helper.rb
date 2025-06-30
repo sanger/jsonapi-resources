@@ -23,7 +23,6 @@ end
 ENV['DATABASE_URL'] ||= "sqlite3:test_db"
 
 require 'active_record/railtie'
-require 'rails/test_help'
 require 'minitest/mock'
 require 'jsonapi-resources'
 require 'pry'
@@ -42,7 +41,11 @@ JSONAPI.configure do |config|
   config.json_key_format = :camelized_key
 end
 
-ActiveSupport::Deprecation.silenced = true
+if ActiveSupport::Deprecation.respond_to?(:behavior=)
+  ActiveSupport::Deprecation.behavior = :silence
+elsif ActiveSupport::Deprecation.respond_to?(:silenced=)
+  ActiveSupport::Deprecation.silenced = true
+end
 
 puts "Testing With RAILS VERSION #{Rails.version}"
 
@@ -457,12 +460,12 @@ class Minitest::Test
     true
   end
 
-  self.fixture_path = "#{Rails.root}/fixtures"
+  self.fixture_paths = ["#{Rails.root}/fixtures"]
   fixtures :all
 end
 
 class ActiveSupport::TestCase
-  self.fixture_path = "#{Rails.root}/fixtures"
+  self.fixture_paths = ["#{Rails.root}/fixtures"]
   fixtures :all
   setup do
     @routes = TestApp.routes
@@ -470,7 +473,7 @@ class ActiveSupport::TestCase
 end
 
 class ActionDispatch::IntegrationTest
-  self.fixture_path = "#{Rails.root}/fixtures"
+  self.fixture_paths = ["#{Rails.root}/fixtures"]
   fixtures :all
 
   def assert_jsonapi_response(expected_status, msg = nil)
