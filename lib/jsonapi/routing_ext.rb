@@ -48,13 +48,13 @@ module ActionDispatch
 
           resource @resource_type, **options do
             # Rails 6+ and 8.1: always use the modern block style
-            jsonapi_resource_scope(SingletonResource.new(@resource_type, api_only?, @scope[:shallow], options), @resource_type) do
-              if block_given?
-                yield
-              else
-                jsonapi_relationships
-              end
-            end
+            # jsonapi_resource_scope(SingletonResource.new(@resource_type, api_only?, @scope[:shallow], options), @resource_type) do
+            #   if block_given?
+            #     yield
+            #   else
+            #     jsonapi_relationships
+            #   end
+            # end
           end
         end
 
