@@ -86,7 +86,6 @@ module ActionDispatch
           options.merge!(res.routing_resource_options)
 
           options[:param] = :id
-
           options[:path] = format_route(@resource_type)
 
           if res.resource_key_type == :uuid
@@ -109,26 +108,14 @@ module ActionDispatch
           end
 
           resources @resource_type, options do
-            # :nocov:
-            if @scope.respond_to? :[]=
-              # Rails 4
-              @scope[:jsonapi_resource] = @resource_type
+            # Rails 6+ and 8.1: always use the modern block style
+            jsonapi_resource_scope(Resource.new(@resource_type, api_only?, @scope[:shallow], options), @resource_type) do
               if block_given?
                 yield
               else
                 jsonapi_relationships
               end
-            else
-              # Rails 5
-              jsonapi_resource_scope(Resource.new(@resource_type, api_only?, @scope[:shallow], options), @resource_type) do
-                if block_given?
-                  yield
-                else
-                  jsonapi_relationships
-                end
-              end
             end
-            # :nocov:
           end
         end
 
