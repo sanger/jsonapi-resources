@@ -47,7 +47,7 @@ module ActionDispatch
           end
 
           resource @resource_type, options do
-            jsonapi_resource_scope(SingletonResource.new(@resource_type, api_only?, @scope[:shallow], options), @resource_type) do
+            jsonapi_resource_scope(SingletonResource.new(@resource_type, api_only?, @scope[:shallow], **options), @resource_type) do
               if block_given?
                 yield
               else
