@@ -33,18 +33,18 @@ module ActionDispatch
           options.merge!(res.routing_resource_options)
           options[:path] = format_route(@resource_type)
 
-          # if options[:except]
-          #   options[:except] << :new unless options[:except].include?(:new) || options[:except].include?('new')
-          #   options[:except] << :edit unless options[:except].include?(:edit) || options[:except].include?('edit')
-          # else
-          #   options[:except] = [:new, :edit]
-          # end
+          if options[:except]
+            options[:except] << :new unless options[:except].include?(:new) || options[:except].include?('new')
+            options[:except] << :edit unless options[:except].include?(:edit) || options[:except].include?('edit')
+          else
+            options[:except] = [:new, :edit]
+          end
 
-          # if res._immutable
-          #   options[:except] << :create unless options[:except].include?(:create) || options[:except].include?('create')
-          #   options[:except] << :update unless options[:except].include?(:update) || options[:except].include?('update')
-          #   options[:except] << :destroy unless options[:except].include?(:destroy) || options[:except].include?('destroy')
-          # end
+          if res._immutable
+            options[:except] << :create unless options[:except].include?(:create) || options[:except].include?('create')
+            options[:except] << :update unless options[:except].include?(:update) || options[:except].include?('update')
+            options[:except] << :destroy unless options[:except].include?(:destroy) || options[:except].include?('destroy')
+          end
 
           resource @resource_type, options do
             # Rails 6+ and 8.1: always use the modern block style
@@ -93,19 +93,19 @@ module ActionDispatch
             options[:constraints][:id] ||= /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/
           end
 
-          # if options[:except]
-          #   options[:except] = Array(options[:except])
-          #   options[:except] << :new unless options[:except].include?(:new) || options[:except].include?('new')
-          #   options[:except] << :edit unless options[:except].include?(:edit) || options[:except].include?('edit')
-          # else
-          #   options[:except] = [:new, :edit]
-          # end
+          if options[:except]
+            options[:except] = Array(options[:except])
+            options[:except] << :new unless options[:except].include?(:new) || options[:except].include?('new')
+            options[:except] << :edit unless options[:except].include?(:edit) || options[:except].include?('edit')
+          else
+            options[:except] = [:new, :edit]
+          end
 
-          # if res._immutable
-          #   options[:except] << :create unless options[:except].include?(:create) || options[:except].include?('create')
-          #   options[:except] << :update unless options[:except].include?(:update) || options[:except].include?('update')
-          #   options[:except] << :destroy unless options[:except].include?(:destroy) || options[:except].include?('destroy')
-          # end
+          if res._immutable
+            options[:except] << :create unless options[:except].include?(:create) || options[:except].include?('create')
+            options[:except] << :update unless options[:except].include?(:update) || options[:except].include?('update')
+            options[:except] << :destroy unless options[:except].include?(:destroy) || options[:except].include?('destroy')
+          end
 
           p "Options: #{options}"
 
