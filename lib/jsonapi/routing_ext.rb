@@ -109,7 +109,6 @@ module ActionDispatch
 
           resources @resource_type, options do
             # Rails 6+ and 8.1: always use the modern block style
-              @jsonapi_resource_type = @resource_type
               if block_given?
                 yield
               else
