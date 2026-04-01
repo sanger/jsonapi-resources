@@ -1,4 +1,4 @@
-# JSONAPI::Resources [![Gem Version](https://badge.fury.io/rb/jsonapi-resources.svg)](https://badge.fury.io/rb/jsonapi-resources) [![Build Status](https://secure.travis-ci.org/cerebris/jsonapi-resources.svg?branch=beta)](http://travis-ci.org/cerebris/jsonapi-resources) [![Code Climate](https://codeclimate.com/github/cerebris/jsonapi-resources/badges/gpa.svg)](https://codeclimate.com/github/cerebris/jsonapi-resources)
+# JSONAPI::Resources [![Gem Version](https://badge.fury.io/rb/jsonapi-resources.svg)](https://badge.fury.io/rb/jsonapi-resources) [![Build Status](https://secure.travis-ci.org/cerebris/jsonapi-resources.svg?branch=master)](http://travis-ci.org/cerebris/jsonapi-resources) [![Code Climate](https://codeclimate.com/github/cerebris/jsonapi-resources/badges/gpa.svg)](https://codeclimate.com/github/cerebris/jsonapi-resources)
 
 [![Join the chat at https://gitter.im/cerebris/jsonapi-resources](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cerebris/jsonapi-resources?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -8,12 +8,12 @@
 Like JSON:API itself, JR's design is focused on the resources served by an API. JR needs little more than a definition
 of your resources, including their attributes and relationships, to make your server compliant with JSON API.
 
-JR is designed to work with Rails 4.2+, and provides custom routes, controllers, and serializers. JR's resources may be
+JR is designed to work with Rails 5.1+, and provides custom routes, controllers, and serializers. JR's resources may be
 backed by ActiveRecord models or by custom objects.
 
 ## Documentation
 
-Full documentation can be found at [http://jsonapi-resources.com](http://jsonapi-resources.com), including the [v0.9 beta Guide](http://jsonapi-resources.com/v0.9/guide/) specific to this version. 
+Full documentation can be found at [http://jsonapi-resources.com](http://jsonapi-resources.com), including the [v0.10 alpha Guide](http://jsonapi-resources.com/v0.10/guide/) specific to this version. 
 
 ## Demo App
 
@@ -28,26 +28,27 @@ which *should* be compatible with JSON:API compliant server implementations such
 
 Add JR to your application's `Gemfile`:
 
-    gem 'sanger-jsonapi-resources'
+``` 
+gem 'jsonapi-resources'
+```
 
 And then execute:
 
-    $ bundle
+```bash 
+bundle
+```
 
 Or install it yourself as:
 
-    $ gem install sanger-jsonapi-resources
+```bash 
+gem install jsonapi-resources
+```
 
-**For further usage see the [v0.9 beta Guide](http://jsonapi-resources.com/v0.9/guide/)**
+**For further usage see the [v0.10 alpha Guide](http://jsonapi-resources.com/v0.10/guide/)**
 
 ## Contributing
-
-1. Fork it ( http://github.com/cerebris/jsonapi-resources/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+See CONTRIBUTING.md for details.
 
 ## License
 
-Copyright 2014-2016 Cerebris Corporation. MIT License (see LICENSE for details).
+Copyright 2014-2021 Cerebris Corporation. MIT License (see LICENSE for details).
