@@ -47,29 +47,7 @@ gem install jsonapi-resources
 **For further usage see the [v0.10 alpha Guide](http://jsonapi-resources.com/v0.10/guide/)**
 
 ## Contributing
-
-1. Submit an issue describing any new features you wish it add or the bug you intend to fix
-1. Fork it ( http://github.com/cerebris/jsonapi-resources/fork )
-1. Create your feature branch (`git checkout -b my-new-feature`)
-1. Run the full test suite (`rake test`)
-1. Fix any failing tests
-1. Commit your changes (`git commit -am 'Add some feature'`)
-1. Push to the branch (`git push origin my-new-feature`)
-1. Create a new Pull Request
-
-## Did you find a bug?
-
-* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/cerebris/jsonapi-resources/issues).
-
-* If you're unable to find an open issue addressing the problem, [open a new one](https://github.com/cerebris/jsonapi-resources/issues/new). 
-Be sure to include a **title and clear description**, as much relevant information as possible, 
-and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
-
-* If possible, use the relevant bug report templates to create the issue. 
-Simply copy the content of the appropriate template into a .rb file, make the necessary changes to demonstrate the issue, 
-and **paste the content into the issue description or attach as a file**:
-  * [**Rails 5** issues](https://github.com/cerebris/jsonapi-resources/blob/master/lib/bug_report_templates/rails_5_master.rb)
-
+See CONTRIBUTING.md for details.
 
 ## License
 
