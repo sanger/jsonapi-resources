@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 module JSONAPI
+  # HTTP 422 symbol name varies across Rack versions (:unprocessable_entity on Rack 2.x, :unprocessable_content on Rack 3.1+).
+  UNPROCESSABLE_ENTITY_STATUS =
+    if Rack::Utils::SYMBOL_TO_STATUS_CODE.key?(:unprocessable_content)
+      :unprocessable_content
+    else
+      :unprocessable_entity
+    end
+
   module Exceptions
     class Error < RuntimeError
       attr_reader :error_object_overrides
@@ -498,7 +506,7 @@ module JSONAPI
 
       def json_api_error(attr_key, message)
         create_error_object(code: JSONAPI::VALIDATION_ERROR,
-                            status: :unprocessable_entity,
+                            status: JSONAPI::UNPROCESSABLE_ENTITY_STATUS,
                             title: message,
                             detail: detail(attr_key, message),
                             source: { pointer: pointer(attr_key) },
@@ -532,7 +540,7 @@ module JSONAPI
     class SaveFailed < Error
       def errors
         [create_error_object(code: JSONAPI::SAVE_FAILED,
-                             status: :unprocessable_entity,
+                             status: JSONAPI::UNPROCESSABLE_ENTITY_STATUS,
                              title: I18n.translate('jsonapi-resources.exceptions.save_failed.title',
                                                    default: 'Save failed or was cancelled'),
                              detail: I18n.translate('jsonapi-resources.exceptions.save_failed.detail',
