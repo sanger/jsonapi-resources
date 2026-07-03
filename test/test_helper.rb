@@ -56,6 +56,11 @@ class TestApp < Rails::Application
     config.active_record.time_zone_aware_types = [:time, :datetime]
     config.active_record.belongs_to_required_by_default = false
   end
+
+  # Use a modern cache serialization format to avoid Rails 7.2+ deprecations.
+  if Rails::VERSION::MAJOR >= 7 && config.active_support.respond_to?(:cache_format_version=)
+    config.active_support.cache_format_version = 7.1
+  end
 end
 
 module MyEngine
