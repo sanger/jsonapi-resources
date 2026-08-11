@@ -24,6 +24,7 @@ ENV['DATABASE_URL'] ||= "sqlite3:test_db"
 
 require 'active_record/railtie'
 require 'minitest/mock'
+require 'minitest/autorun'
 require 'jsonapi-resources'
 require 'pry'
 
