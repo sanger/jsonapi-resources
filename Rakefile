@@ -3,7 +3,7 @@ require 'bundler/gem_tasks'
 require 'rake/testtask'
 
 Rake::TestTask.new do |t|
-  t.verbose = true
+  t.verbose = false
   t.warning = false
   t.test_files = FileList['test/**/*_test.rb']
 end
