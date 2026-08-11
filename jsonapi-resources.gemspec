@@ -27,8 +27,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'concurrent-ruby-ext'
-  spec.add_dependency 'activerecord', '>= 7.1', '<= 8.1' # versions 7.1, 7.2, 8.0
-  spec.add_dependency 'railties', '>= 7.1', '<= 8.1' # versions 7.1, 7.2, 8.0
+  spec.add_dependency 'activerecord', '>= 7.1', '< 8.1' # versions 7.1, 7.2, 8.0
+  spec.add_dependency 'railties', '>= 7.1', '< 8.1' # versions 7.1, 7.2, 8.0
   spec.add_dependency 'rack', '~> 3.0'
   spec.add_dependency 'concurrent-ruby'
   spec.add_runtime_dependency 'csv'
