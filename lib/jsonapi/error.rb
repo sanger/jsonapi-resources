@@ -17,7 +17,7 @@ module JSONAPI
       @source         = options[:source]
       @links          = options[:links]
 
-      @status         = Rack::Utils.status_code(options[:status]).to_s
+      @status         = status_code(options[:status]).to_s
       @meta           = options[:meta]
     end
 
@@ -48,10 +48,21 @@ module JSONAPI
 
       if error_object_overrides[:status]
         # :nocov:
-        @status         = Rack::Utils::SYMBOL_TO_STATUS_CODE[error_object_overrides[:status]].to_s
+        @status       = status_code(error_object_overrides[:status]).to_s
         # :nocov:
       end
       @meta           = error_object_overrides[:meta] || @meta
+    end
+
+    private
+
+    # Extracted from Rack 2
+    def status_code(status)
+      if status.is_a?(Symbol)
+        Rack::Utils::SYMBOL_TO_STATUS_CODE.fetch(status) { raise ArgumentError, "Unrecognized status code #{status.inspect}" }
+      else
+        status.to_i
+      end
     end
   end
 
