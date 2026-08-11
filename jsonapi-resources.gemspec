@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'concurrent-ruby-ext'
   spec.add_dependency 'activerecord', '>= 4.1'
   spec.add_dependency 'railties', '>= 4.1'
+  spec.add_dependency 'rack', '~> 3.0'
   spec.add_dependency 'concurrent-ruby'
   spec.add_runtime_dependency 'csv'
 end
