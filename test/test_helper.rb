@@ -20,6 +20,7 @@ end
 
 require 'active_record/railtie'
 require 'minitest/mock'
+require 'minitest/autorun'
 require 'jsonapi-resources'
 require 'pry'
 
