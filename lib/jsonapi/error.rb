@@ -30,7 +30,7 @@ module JSONAPI
     # Extracted from Rack 2
     def status_code(status)
       if status.is_a?(Symbol)
-        Rack::Utils.SYMBOL_TO_STATUS_CODE.fetch(status) { raise ArgumentError, "Unrecognized status code #{status.inspect}" }
+        Rack::Utils::SYMBOL_TO_STATUS_CODE.fetch(status) { raise ArgumentError, "Unrecognized status code #{status.inspect}" }
       else
         status.to_i
       end
