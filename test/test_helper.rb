@@ -86,9 +86,9 @@ end
 
 # Monkeypatch ActionController::TestCase to delete the RAW_POST_DATA on subsequent calls in the same test.
 module ClearRawPostHeader
-  def process(action, **args)
+  def process(action, *args, **kwargs)
     @request.delete_header 'RAW_POST_DATA'
-    super action, **args
+    super(action, *args, **kwargs)
   end
 end
 
@@ -523,13 +523,13 @@ class ActionDispatch::IntegrationTest
 end
 
 class ActionController::TestCase
-  def assert_cacheable_get(action, **args)
+  def assert_cacheable_get(action, **request_options)
     assert_nil JSONAPI.configuration.resource_cache
 
     normal_queries = []
     normal_query_callback = lambda {|_, _, _, _, payload| normal_queries.push payload[:sql] }
     ActiveSupport::Notifications.subscribed(normal_query_callback, 'sql.active_record') do
-      get action, **args
+      get action, **request_options
     end
     non_caching_response = json_response_sans_all_backtraces
     non_caching_status = response.status
@@ -565,7 +565,7 @@ class ActionController::TestCase
               @controller = nil
               setup_controller_request_and_response
               @request.headers.merge!(orig_request_headers.dup)
-              get action, **args
+              get action, **request_options
             end
           end
         rescue Exception
