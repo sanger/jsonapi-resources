@@ -21,6 +21,7 @@ end
 require 'active_record/railtie'
 require 'minitest/mock'
 require 'minitest/autorun'
+require 'minitest/reporters'
 require 'jsonapi-resources'
 require 'pry'
 
@@ -28,6 +29,8 @@ require File.expand_path('../helpers/value_matchers', __FILE__)
 require File.expand_path('../helpers/assertions', __FILE__)
 require File.expand_path('../helpers/functional_helpers', __FILE__)
 require File.expand_path('../helpers/configuration_helpers', __FILE__)
+
+Minitest::Reporters.use!
 
 Rails.env = 'test'
 
