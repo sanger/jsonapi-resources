@@ -58,6 +58,10 @@ module JSONAPI
 
     # Extracted from Rack 2
     def status_code(status)
+      if status.nil?
+        raise ArgumentError, "Status code is required"
+      end
+
       if status.is_a?(Symbol)
         Rack::Utils::SYMBOL_TO_STATUS_CODE.fetch(status) { raise ArgumentError, "Unrecognized status code #{status.inspect}" }
       else
