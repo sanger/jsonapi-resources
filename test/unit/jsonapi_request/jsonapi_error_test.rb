@@ -1,10 +1,12 @@
 require File.expand_path('../../../test_helper', __FILE__)
 
 class JSONAPIErrorTest < Minitest::Test
-  def test_status_code_no_status
-    error = JSONAPI::Error.new(code: JSONAPI::BAD_REQUEST)
+  def test_status_code_requires_status
+    error = assert_raises(ArgumentError) do
+      JSONAPI::Error.new(code: JSONAPI::BAD_REQUEST)
+    end
 
-    assert_equal('0', error.status)
+    assert_equal('Status code is required', error.message)
   end
 
   def test_status_code_accepts_symbol
@@ -33,9 +35,11 @@ class JSONAPIErrorTest < Minitest::Test
     assert_equal('Unrecognized status code :not_a_real_status', error.message)
   end
 
-  def test_status_code_handles_nil
-    error = JSONAPI::Error.new(code: JSONAPI::BAD_REQUEST, status: nil)
+  def test_status_code_rejects_nil
+    error = assert_raises(ArgumentError) do
+      JSONAPI::Error.new(code: JSONAPI::BAD_REQUEST, status: nil)
+    end
 
-    assert_equal('0', error.status)
+    assert_equal('Status code is required', error.message)
   end
 end
