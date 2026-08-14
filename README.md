@@ -11,7 +11,7 @@ backed by ActiveRecord models or by custom objects.
 
 ## Documentation
 
-Full documentation can be found at [http://jsonapi-resources.com](http://jsonapi-resources.com), including the [v0.10 alpha Guide](http://jsonapi-resources.com/v0.10/guide/) specific to this version. 
+Full documentation can be found at [http://jsonapi-resources.com](http://jsonapi-resources.com), including the [v0.10 alpha Guide](http://jsonapi-resources.com/v0.10/guide/) specific to this version.
 
 ## Demo App
 
@@ -20,31 +20,32 @@ We have a simple demo app, called [Peeps](https://github.com/cerebris/peeps), av
 ## Client Libraries
 
 JSON:API maintains a (non-verified) listing of [client libraries](http://jsonapi.org/implementations/#client-libraries)
-which *should* be compatible with JSON:API compliant server implementations such as JR.
+which _should_ be compatible with JSON:API compliant server implementations such as JR.
 
 ## Installation
 
 Add JR to your application's `Gemfile`:
 
-``` 
+```
 gem 'jsonapi-resources'
 ```
 
 And then execute:
 
-```bash 
+```bash
 bundle
 ```
 
 Or install it yourself as:
 
-```bash 
+```bash
 gem install jsonapi-resources
 ```
 
 **For further usage see the [v0.10 alpha Guide](http://jsonapi-resources.com/v0.10/guide/)**
 
 ## Contributing
+
 See CONTRIBUTING.md for details.
 
 ## License
