@@ -17,17 +17,20 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '>= 2.1'
+  spec.required_ruby_version = '>= 3.2'
 
   spec.add_development_dependency 'bundler', '>= 1.5', '< 3.0'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'minitest'
+  spec.add_development_dependency 'minitest-mock'
   spec.add_development_dependency 'minitest-spec-rails'
+  spec.add_development_dependency 'minitest-reporters'
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'concurrent-ruby-ext'
-  spec.add_dependency 'activerecord', '>= 4.1'
-  spec.add_dependency 'railties', '>= 4.1'
+  spec.add_dependency 'activerecord', '>= 7.1', '< 8.1' # versions 7.1, 7.2, 8.0
+  spec.add_dependency 'railties', '>= 7.1', '< 8.1' # versions 7.1, 7.2, 8.0
+  spec.add_dependency 'rack', '~> 3.0'
   spec.add_dependency 'concurrent-ruby'
   spec.add_runtime_dependency 'csv'
 end
