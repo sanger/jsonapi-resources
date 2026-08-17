@@ -442,7 +442,9 @@ class ResourceTest < ActiveSupport::TestCase
         end
       CODE
     end
-    assert_match /DEPRECATION WARNING: Id without format is no longer supported. Please remove ids from attributes, or specify a format./, err
+    err_msg = /DEPRECATION WARNING: Id without format is no longer supported. Please remove ids from attributes, or specify a format./
+    err_msg_rails_8 = /\[DUPLICATE ATTRIBUTE\] `id` has already been defined in ProblemResource\./
+    assert(err.match?(err_msg) || err.match?(err_msg_rails_8), "Expected either deprecation or duplicate-attribute warning, got: #{err}")
   ensure
     ActiveSupport::Deprecation.silenced = true
   end
