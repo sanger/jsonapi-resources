@@ -256,6 +256,9 @@ class RequestTest < ActionDispatch::IntegrationTest
       }
 
     assert_jsonapi_response 422
+    assert_equal JSONAPI::VALIDATION_ERROR, json_response['errors'][0]['code']
+    assert_equal '422', json_response['errors'][0]['status']
+    assert_match "can't be blank", json_response['errors'][0]['title']
   end
 
   def test_update_relationship_without_content_type

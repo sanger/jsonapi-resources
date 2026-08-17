@@ -511,7 +511,7 @@ module JSONAPI
         check_reserved_attribute_name(attr)
 
         if (attr.to_sym == :id) && (options[:format].nil?)
-          ActiveSupport::Deprecation.warn('Id without format is no longer supported. Please remove ids from attributes, or specify a format.')
+          ActiveSupport::Deprecation.new(nil, 'JSONAPI').warn('Id without format is no longer supported. Please remove ids from attributes, or specify a format.')
         end
 
         check_duplicate_attribute_name(attr) if options[:format].nil?

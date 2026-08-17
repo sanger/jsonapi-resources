@@ -350,7 +350,7 @@ class Post < ActiveRecord::Base
   has_many :comments
   has_and_belongs_to_many :tags, join_table: :posts_tags
   has_many :special_post_tags
-  has_many :special_tags, through: :special_post_tags
+  has_many :special_tags, through: :special_post_tags, source: :tag
   belongs_to :section
   has_one :parent_post, class_name: 'Post', foreign_key: 'parent_post_id'
 

@@ -15,7 +15,7 @@ module JSONAPI
       @source         = options[:source]
       @links          = options[:links]
 
-      @status         = Rack::Utils.status_code(options[:status]).to_s
+      @status         = status_code(options[:status]).to_s
       @meta           = options[:meta]
     end
 
@@ -23,6 +23,21 @@ module JSONAPI
       hash = {}
       instance_variables.each {|var| hash[var.to_s.delete('@')] = instance_variable_get(var) unless instance_variable_get(var).nil? }
       hash
+    end
+
+    private
+
+    # Extracted from Rack 2
+    def status_code(status)
+      if status.nil?
+        raise ArgumentError, "Status code is required"
+      end
+
+      if status.is_a?(Symbol)
+        Rack::Utils::SYMBOL_TO_STATUS_CODE.fetch(status) { raise ArgumentError, "Unrecognized status code #{status.inspect}" }
+      else
+        status.to_i
+      end
     end
   end
 
