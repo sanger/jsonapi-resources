@@ -56,8 +56,10 @@ Check which versions we have published at https://rubygems.org/gems/sanger-jsona
 - Change version number in `lib/jsonapi/resources/version.rb` . This file is read by the gemspec during publication.
 - Test Sequencescape with the gem from the branch.
 - Merge the branch into develop.
+- Create a release from the develop branch with the new version number as the tag. Set Release label to _None_.
 <!-- list separator -->
-- Checkout the develop branch.
+- Checkout the newly-created tag on develop.
+- Execute `bundle install` to ensure the gemspec is up to date.
 - Execute `gem build jsonapi-resources.gemspec` which builds sanger-jsonapi-resources-0.1.x.gem in this case.
 - Execute `gem push sanger-jsonapi-resources-0.1.x.gem` which publishes the gem.
 
@@ -67,8 +69,10 @@ Check which versions we have published at https://rubygems.org/gems/sanger-jsona
 - Change version number in `lib/jsonapi/resources/version.rb` . This file is read by the gemspec during publication.
 - Test Traction with the gem from the branch.
 - Merge the branch into master.
+- Create a release from the master branch with the new version number as the tag. Set Release label to _Latest_.
 <!-- list separator -->
-- Checkout the master branch.
+- Checkout the newly-created tag on master.
+- Execute `bundle install` to ensure the gemspec is up to date.
 - Execute `gem build jsonapi-resources.gemspec` which builds sanger-jsonapi-resources-0.2.x.gem in this case.
 - Execute `gem push sanger-jsonapi-resources-0.2.x.gem` which publishes the gem.
 
@@ -76,14 +80,8 @@ Check which versions we have published at https://rubygems.org/gems/sanger-jsona
 
 You will be notified by email for each. You will also receive one email for API key setup. The first push will ask email and password for the account, which are in KeePass (search for "gem").
 
-> [!TIP]
-> The process above can be improved by creating new releases first and then publish gems from those releases (tags) rather than publications from master (0.2) and develop (0.1) branches. Still create the releases to make tags in this work though.
-
 > [!NOTE]
 > The email and password for gem publication is a recent addition to the credentials database. Pull latest changes in the credentials repo.
-
-> [!IMPORTANT]
-> Developers need to execute `bundle install`.
 
 ## Contributing
 
