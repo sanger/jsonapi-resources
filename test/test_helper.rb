@@ -46,6 +46,9 @@ JSONAPI.configure do |config|
   config.json_key_format = :camelized_key
 end
 
+puts "-" * 32
+puts "Testing With RAILS VERSION #{Rails.version}"
+puts "-" * 32
 
 class TestApp < Rails::Application
   config.eager_load = false
