@@ -51,7 +51,9 @@ elsif ActiveSupport::Deprecation.respond_to?(:silenced=)
   ActiveSupport::Deprecation.silenced = true
 end
 
+puts "-" * 32
 puts "Testing With RAILS VERSION #{Rails.version}"
+puts "-" * 32
 
 class TestApp < Rails::Application
   config.eager_load = false
