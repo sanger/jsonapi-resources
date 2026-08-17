@@ -17,11 +17,7 @@
 module JSONAPI
   module CompatibilityHelper
     def deprecation_warn(message)
-      if ActiveSupport::Deprecation.respond_to?(:warn) && ActiveSupport::Deprecation.public_method_defined?(:warn)
-        ActiveSupport::Deprecation.warn(message)
-      else
         ActiveSupport::Deprecation.new(nil, 'JSONAPI').warn(message)
-      end
     end
     module_function :deprecation_warn
   end
