@@ -46,7 +46,7 @@ module ActionDispatch
             options[:except] << :destroy unless options[:except].include?(:destroy) || options[:except].include?('destroy')
           end
 
-          resource @resource_type, options do
+          resource @resource_type, **options do
             jsonapi_resource_scope(SingletonResource.new(@resource_type, api_only?, @scope[:shallow], **options), @resource_type) do
               if block_given?
                 yield
@@ -107,7 +107,7 @@ module ActionDispatch
             options[:except] << :destroy unless options[:except].include?(:destroy) || options[:except].include?('destroy')
           end
 
-          resources @resource_type, options do
+          resources @resource_type, **options do
             jsonapi_resource_scope(Resource.new(@resource_type, api_only?, @scope[:shallow], **options), @resource_type) do
               if block_given?
                 yield
