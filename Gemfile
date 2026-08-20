@@ -11,6 +11,8 @@ platforms :jruby do
 end
 
 version = ENV['RAILS_VERSION'] || 'default'
+# If version is like 'x.y' add a '.0' to make it 'x.y.0' for correct resolution
+version = "#{version}.0" if version =~ /^\d+\.\d+$/
 
 case version
 when 'master'
