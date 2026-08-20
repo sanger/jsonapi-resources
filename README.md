@@ -48,6 +48,8 @@ gem install jsonapi-resources
 
 There are two versions of the gem which we use for production. The version 1 series has unique customisations and is used by Sequencescape. The version 2 series is a more generic version which is used by Traction.
 
+The aim is to support the 3 most recent Rails versions for each series to allow for seamless upgrades between releases.
+
 Check which versions we have published at https://rubygems.org/gems/sanger-jsonapi-resources
 
 ### For version 1 series
