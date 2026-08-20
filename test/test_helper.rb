@@ -24,6 +24,8 @@ ENV['DATABASE_URL'] ||= "sqlite3:test_db"
 
 require 'active_record/railtie'
 require 'minitest/mock'
+require 'minitest/autorun'
+require 'minitest/reporters'
 require 'jsonapi-resources'
 require 'pry'
 
@@ -31,6 +33,13 @@ require File.expand_path('../helpers/value_matchers', __FILE__)
 require File.expand_path('../helpers/assertions', __FILE__)
 require File.expand_path('../helpers/functional_helpers', __FILE__)
 require File.expand_path('../helpers/configuration_helpers', __FILE__)
+
+if ENV['CI'] == 'true'
+  # The SpecReporter is easier to read on GitHub
+  Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+else
+  Minitest::Reporters.use!
+end
 
 Rails.env = 'test'
 
@@ -41,13 +50,19 @@ JSONAPI.configure do |config|
   config.json_key_format = :camelized_key
 end
 
-if ActiveSupport::Deprecation.respond_to?(:behavior=)
-  ActiveSupport::Deprecation.behavior = :silence
-elsif ActiveSupport::Deprecation.respond_to?(:silenced=)
-  ActiveSupport::Deprecation.silenced = true
+def set_deprecation_behavior(mode)
+  if ActiveSupport::Deprecation.respond_to?(:behavior=)
+    ActiveSupport::Deprecation.behavior = mode
+  elsif ActiveSupport::Deprecation.respond_to?(:silenced=)
+    ActiveSupport::Deprecation.silenced = (mode == :silence)
+  end
 end
 
+set_deprecation_behavior(:silence)
+
+puts "-" * 32
 puts "Testing With RAILS VERSION #{Rails.version}"
+puts "-" * 32
 
 class TestApp < Rails::Application
   config.eager_load = false
@@ -65,9 +80,8 @@ class TestApp < Rails::Application
   config.active_support.halt_callback_chains_on_return_false = false
   config.active_record.time_zone_aware_types = [:time, :datetime]
   config.active_record.belongs_to_required_by_default = false
-  if Rails::VERSION::MAJOR == 5 && Rails::VERSION::MINOR == 2
-    config.active_record.sqlite3.represent_boolean_as_integer = true
-  end
+  config.active_support.cache_format_version = 7.1
+  config.active_support.to_time_preserves_timezone = :zone
 end
 
 DatabaseCleaner.allow_remote_database_url = true
@@ -87,9 +101,9 @@ end
 
 # Monkeypatch ActionController::TestCase to delete the RAW_POST_DATA on subsequent calls in the same test.
 module ClearRawPostHeader
-  def process(action, **args)
+  def process(action, *args, **kwargs)
     @request.delete_header 'RAW_POST_DATA'
-    super action, **args
+    super(action, *args, **kwargs)
   end
 end
 
@@ -524,13 +538,13 @@ class ActionDispatch::IntegrationTest
 end
 
 class ActionController::TestCase
-  def assert_cacheable_get(action, **args)
+  def assert_cacheable_get(action, **request_options)
     assert_nil JSONAPI.configuration.resource_cache
 
     normal_queries = []
     normal_query_callback = lambda {|_, _, _, _, payload| normal_queries.push payload[:sql] }
     ActiveSupport::Notifications.subscribed(normal_query_callback, 'sql.active_record') do
-      get action, **args
+      get action, **request_options
     end
     non_caching_response = json_response_sans_all_backtraces
     non_caching_status = response.status
@@ -566,7 +580,7 @@ class ActionController::TestCase
               @controller = nil
               setup_controller_request_and_response
               @request.headers.merge!(orig_request_headers.dup)
-              get action, **args
+              get action, **request_options
             end
           end
         rescue Exception

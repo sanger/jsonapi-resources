@@ -1,6 +1,4 @@
-# JSONAPI::Resources [![Gem Version](https://badge.fury.io/rb/jsonapi-resources.svg)](https://badge.fury.io/rb/jsonapi-resources) [![Build Status](https://secure.travis-ci.org/cerebris/jsonapi-resources.svg?branch=master)](http://travis-ci.org/cerebris/jsonapi-resources) [![Code Climate](https://codeclimate.com/github/cerebris/jsonapi-resources/badges/gpa.svg)](https://codeclimate.com/github/cerebris/jsonapi-resources)
-
-[![Join the chat at https://gitter.im/cerebris/jsonapi-resources](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/cerebris/jsonapi-resources?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# JSONAPI::Resources (Sanger fork)
 
 `JSONAPI::Resources`, or "JR", provides a framework for developing an API server that complies with the
 [JSON:API](http://jsonapi.org/) specification.
@@ -13,7 +11,7 @@ backed by ActiveRecord models or by custom objects.
 
 ## Documentation
 
-Full documentation can be found at [http://jsonapi-resources.com](http://jsonapi-resources.com), including the [v0.10 alpha Guide](http://jsonapi-resources.com/v0.10/guide/) specific to this version. 
+Full documentation can be found at [http://jsonapi-resources.com](http://jsonapi-resources.com), including the [v0.10 alpha Guide](http://jsonapi-resources.com/v0.10/guide/) specific to this version.
 
 ## Demo App
 
@@ -22,31 +20,73 @@ We have a simple demo app, called [Peeps](https://github.com/cerebris/peeps), av
 ## Client Libraries
 
 JSON:API maintains a (non-verified) listing of [client libraries](http://jsonapi.org/implementations/#client-libraries)
-which *should* be compatible with JSON:API compliant server implementations such as JR.
+which _should_ be compatible with JSON:API compliant server implementations such as JR.
 
 ## Installation
 
 Add JR to your application's `Gemfile`:
 
-``` 
+```
 gem 'jsonapi-resources'
 ```
 
 And then execute:
 
-```bash 
+```bash
 bundle
 ```
 
 Or install it yourself as:
 
-```bash 
+```bash
 gem install jsonapi-resources
 ```
 
 **For further usage see the [v0.10 alpha Guide](http://jsonapi-resources.com/v0.10/guide/)**
 
+## Sanger-specific release process
+
+There are two versions of the gem which we use for production. The version 1 series has unique customisations and is used by Sequencescape. The version 2 series is a more generic version which is used by Traction.
+
+The aim is to support the 3 most recent Rails versions for each series to allow for seamless upgrades between releases.
+
+Check which versions we have published at https://rubygems.org/gems/sanger-jsonapi-resources
+
+### For version 1 series
+
+- Create a branch from **develop**, apply fixes.
+- Change version number in `lib/jsonapi/resources/version.rb` . This file is read by the gemspec during publication.
+- Test Sequencescape with the gem from the branch.
+- Merge the branch into develop.
+- Create a release from the develop branch with the new version number as the tag. Set Release label to _None_.
+<!-- list separator -->
+- Checkout the newly-created tag on develop.
+- Execute `bundle install` to ensure the gemspec is up to date.
+- Execute `gem build jsonapi-resources.gemspec` which builds sanger-jsonapi-resources-0.1.x.gem in this case.
+- Execute `gem push sanger-jsonapi-resources-0.1.x.gem` which publishes the gem.
+
+### For version 2 series
+
+- Create a branch from **master**, apply fixes.
+- Change version number in `lib/jsonapi/resources/version.rb` . This file is read by the gemspec during publication.
+- Test Traction with the gem from the branch.
+- Merge the branch into master.
+- Create a release from the master branch with the new version number as the tag. Set Release label to _Latest_.
+<!-- list separator -->
+- Checkout the newly-created tag on master.
+- Execute `bundle install` to ensure the gemspec is up to date.
+- Execute `gem build jsonapi-resources.gemspec` which builds sanger-jsonapi-resources-0.2.x.gem in this case.
+- Execute `gem push sanger-jsonapi-resources-0.2.x.gem` which publishes the gem.
+
+### Publication
+
+You will be notified by email for each. You will also receive one email for API key setup. The first push will ask email and password for the account, which are in KeePass (search for "gem").
+
+> [!NOTE]
+> The email and password for gem publication is a recent addition to the credentials database. Pull latest changes in the credentials repo.
+
 ## Contributing
+
 See CONTRIBUTING.md for details.
 
 ## License

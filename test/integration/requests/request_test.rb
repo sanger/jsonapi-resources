@@ -578,7 +578,9 @@ class RequestTest < ActionDispatch::IntegrationTest
 
     assert_equal 400, status
     assert_equal 'Bad Request', json_response['errors'][0]['title']
-    assert_match 'unexpected token at', json_response['errors'][0]['detail']
+    rails_old_msg = 'unexpected token at'
+    rails_8_1_msg = "expected ',' or '}' after object value, got: '\"attributes\":'"
+    assert_match (/(#{rails_old_msg}|#{rails_8_1_msg})/), json_response['errors'][0]['detail']
   end
 
   def test_put_valid_json_but_array
@@ -1367,7 +1369,7 @@ class RequestTest < ActionDispatch::IntegrationTest
   end
 
   def test_deprecated_include_message
-    ActiveSupport::Deprecation.silenced = false
+    set_deprecation_behavior(:report)
     original_config = JSONAPI.configuration.dup
     _out, err = capture_io do
       eval <<-CODE
@@ -1377,7 +1379,7 @@ class RequestTest < ActionDispatch::IntegrationTest
     assert_match /DEPRECATION WARNING: `allow_include` has been replaced by `default_allow_include_to_one` and `default_allow_include_to_many` options./, err
   ensure
     JSONAPI.configuration = original_config
-    ActiveSupport::Deprecation.silenced = true
+    set_deprecation_behavior(:silence)
   end
 
 

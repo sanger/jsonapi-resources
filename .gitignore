@@ -21,5 +21,6 @@ coverage
 test/log
 test_db
 test_db-journal
+test/test_db-*
 .idea
 *.iml

@@ -1679,7 +1679,7 @@ class PlanetResource < JSONAPI::Resource
   attribute :description
 
   has_many :moons
-  belongs_to :planet_type
+  has_one :planet_type
 
   has_many :tags, acts_as_set: true
 end
