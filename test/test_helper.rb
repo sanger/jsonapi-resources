@@ -34,7 +34,12 @@ require File.expand_path('../helpers/assertions', __FILE__)
 require File.expand_path('../helpers/functional_helpers', __FILE__)
 require File.expand_path('../helpers/configuration_helpers', __FILE__)
 
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+if ENV['CI'] == 'true'
+  # The SpecReporter is easier to read on GitHub
+  Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+else
+  Minitest::Reporters.use!
+end
 
 Rails.env = 'test'
 
