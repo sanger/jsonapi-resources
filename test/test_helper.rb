@@ -50,11 +50,15 @@ JSONAPI.configure do |config|
   config.json_key_format = :camelized_key
 end
 
-if ActiveSupport::Deprecation.respond_to?(:behavior=)
-  ActiveSupport::Deprecation.behavior = :silence
-elsif ActiveSupport::Deprecation.respond_to?(:silenced=)
-  ActiveSupport::Deprecation.silenced = true
+def set_deprecation_behavior(mode)
+  if ActiveSupport::Deprecation.respond_to?(:behavior=)
+    ActiveSupport::Deprecation.behavior = mode
+  elsif ActiveSupport::Deprecation.respond_to?(:silenced=)
+    ActiveSupport::Deprecation.silenced = (mode == :silence)
+  end
 end
+
+set_deprecation_behavior(:silence)
 
 puts "-" * 32
 puts "Testing With RAILS VERSION #{Rails.version}"

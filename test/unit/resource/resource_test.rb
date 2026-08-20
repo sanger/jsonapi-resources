@@ -434,7 +434,7 @@ class ResourceTest < ActiveSupport::TestCase
 
   def test_id_attr_deprecation
 
-    ActiveSupport::Deprecation.silenced = false
+    set_deprecation_behavior(:report)
     _out, err = capture_io do
       eval <<-CODE
         class ProblemResource < JSONAPI::Resource
@@ -446,7 +446,7 @@ class ResourceTest < ActiveSupport::TestCase
     err_msg_rails_8 = /\[DUPLICATE ATTRIBUTE\] `id` has already been defined in ProblemResource\./
     assert(err.match?(err_msg) || err.match?(err_msg_rails_8), "Expected either deprecation or duplicate-attribute warning, got: #{err}")
   ensure
-    ActiveSupport::Deprecation.silenced = true
+    set_deprecation_behavior(:silence)
   end
 
   def test_id_attr_with_format

@@ -1367,7 +1367,7 @@ class RequestTest < ActionDispatch::IntegrationTest
   end
 
   def test_deprecated_include_message
-    ActiveSupport::Deprecation.silenced = false
+    set_deprecation_behavior(:report)
     original_config = JSONAPI.configuration.dup
     _out, err = capture_io do
       eval <<-CODE
@@ -1377,7 +1377,7 @@ class RequestTest < ActionDispatch::IntegrationTest
     assert_match /DEPRECATION WARNING: `allow_include` has been replaced by `default_allow_include_to_one` and `default_allow_include_to_many` options./, err
   ensure
     JSONAPI.configuration = original_config
-    ActiveSupport::Deprecation.silenced = true
+    set_deprecation_behavior(:silence)
   end
 
 
