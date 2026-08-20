@@ -4,12 +4,16 @@ require 'jsonapi-resources'
 class JoinTreeTest < ActiveSupport::TestCase
 
   def db_true
+    rails_major = 8
+    rails_minor = 1
+
     case ActiveRecord::Base.connection.adapter_name
       when 'SQLite'
-        if Rails::VERSION::MAJOR >= 6 || (Rails::VERSION::MAJOR >= 5 && ActiveRecord::VERSION::MINOR >= 2)
-          "1"
+        if Rails::VERSION::MAJOR >= rails_major + 1 ||
+            (Rails::VERSION::MAJOR >= rails_major && ActiveRecord::VERSION::MINOR >= rails_minor)
+          "TRUE"
         else
-          "'t'"
+          "1"
         end
       when 'PostgreSQL'
         'TRUE'
