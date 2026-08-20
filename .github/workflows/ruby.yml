@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ 'master' ]
+    branches: ["master"]
   pull_request:
-    branches: ['**']
+    branches: ["**"]
 
 jobs:
   tests:
@@ -13,13 +13,13 @@ jobs:
       fail-fast: false
       matrix:
         ruby:
-          - '3.4'
-          - '3.3'
-          - '3.2'
+          - "3.2"
+          - "3.3"
+          - "3.4"
         rails:
-          - '7.1'
-          - '7.0'
-          - '8.0.2'
+          - "7.0"
+          - "7.1"
+          - "8.0.2"
         database_url:
           - sqlite3:test_db
     env:
