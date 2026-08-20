@@ -29,5 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'database_cleaner'
   spec.add_dependency 'activerecord', '>= 7.2', '< 9.0' # versions 7.2, 8.0, 8.1, and above, but not 9.0
   spec.add_dependency 'railties', '>= 7.2', '< 9.0' # versions 7.2, 8.0, 8.1, and above, but not 9.0
+  spec.add_dependency 'rack', '~> 2.0'
   spec.add_dependency 'concurrent-ruby'
 end
