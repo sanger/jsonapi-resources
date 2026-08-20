@@ -30,7 +30,12 @@ require File.expand_path('../helpers/assertions', __FILE__)
 require File.expand_path('../helpers/functional_helpers', __FILE__)
 require File.expand_path('../helpers/configuration_helpers', __FILE__)
 
-Minitest::Reporters.use!
+if ENV['CI'] == 'true'
+  # The SpecReporter is easier to read on GitHub
+  Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+else
+  Minitest::Reporters.use!
+end
 
 Rails.env = 'test'
 
@@ -41,6 +46,9 @@ JSONAPI.configure do |config|
   config.json_key_format = :camelized_key
 end
 
+puts "-" * 32
+puts "Testing With RAILS VERSION #{Rails.version}"
+puts "-" * 32
 
 class TestApp < Rails::Application
   config.eager_load = false

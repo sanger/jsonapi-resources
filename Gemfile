@@ -11,13 +11,15 @@ platforms :jruby do
 end
 
 version = ENV['RAILS_VERSION'] || 'default'
+# If version is like 'x.y' add a '.0' to make it 'x.y.0' for correct resolution
+version = "#{version}.0" if version =~ /^\d+\.\d+$/
 
 case version
 when 'master'
   gem 'railties', { git: 'https://github.com/rails/rails.git' }
   gem 'arel', { git: 'https://github.com/rails/arel.git' }
 when 'default'
-  gem 'railties', '~> 8.0.0'
+  gem 'railties', '~> 8.1.0'
 else
   gem 'railties', "~> #{version}"
 end

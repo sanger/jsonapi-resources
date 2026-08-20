@@ -38,28 +38,14 @@ module ActionDispatch
             options[:except] << :destroy unless options[:except].include?(:destroy) || options[:except].include?('destroy')
           end
 
-          resource @resource_type, options do
-            # :nocov:
-            if @scope.respond_to? :[]=
-              # Rails 4
-              @scope[:jsonapi_resource] = @resource_type
-
+          resource @resource_type, **options do
+            jsonapi_resource_scope(SingletonResource.new(@resource_type, api_only?, @scope[:shallow], **options), @resource_type) do
               if block_given?
                 yield
               else
                 jsonapi_relationships
               end
-            else
-              # Rails 5
-              jsonapi_resource_scope(SingletonResource.new(@resource_type, api_only?, @scope[:shallow], options), @resource_type) do
-                if block_given?
-                  yield
-                else
-                  jsonapi_relationships
-                end
-              end
             end
-            # :nocov:
           end
         end
 
@@ -107,27 +93,14 @@ module ActionDispatch
             options[:except] << :destroy unless options[:except].include?(:destroy) || options[:except].include?('destroy')
           end
 
-          resources @resource_type, options do
-            # :nocov:
-            if @scope.respond_to? :[]=
-              # Rails 4
-              @scope[:jsonapi_resource] = @resource_type
+          resources @resource_type, **options do
+            jsonapi_resource_scope(Resource.new(@resource_type, api_only?, @scope[:shallow], **options), @resource_type) do
               if block_given?
                 yield
               else
                 jsonapi_relationships
               end
-            else
-              # Rails 5
-              jsonapi_resource_scope(Resource.new(@resource_type, api_only?, @scope[:shallow], options), @resource_type) do
-                if block_given?
-                  yield
-                else
-                  jsonapi_relationships
-                end
-              end
             end
-            # :nocov:
           end
         end
 
